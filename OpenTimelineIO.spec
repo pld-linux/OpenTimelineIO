@@ -8,7 +8,7 @@ Version:	0.18.1
 Release:	1
 License:	Apache v2.0
 Group:		X11/Libraries
-Source0:	https://github.com/AcademySoftwareFoundation/OpenTimelineIO/archive/refs/tags/v%{version}.tar.gz
+Source0:	https://github.com/AcademySoftwareFoundation/OpenTimelineIO/archive/v%{version}/%{name}-%{version}.tar.gz
 # Source0-md5:	7b13298f151ad5bd2d4a74c0c66bfa41
 Source1:	https://github.com/Tencent/rapidjson/archive/%{rjcommit}/rapidjson-%{rjcommit}.tar.gz
 # Source1-md5:	531f76775e11b09b28422bfa1d4d59b5
