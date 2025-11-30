@@ -1,16 +1,18 @@
 #
 # Conditional build:
 %bcond_with	tests		# build with tests
+%define		rjcommit	24b5e7a8b27f42fa16b96fc70aade9106cf7102f
 Summary:	OpenTimelineIO
 Name:		OpenTimelineIO
-Version:	0.17.0
+Version:	0.18.1
 Release:	1
 License:	Apache v2.0
 Group:		X11/Libraries
 Source0:	https://github.com/AcademySoftwareFoundation/OpenTimelineIO/archive/refs/tags/v%{version}.tar.gz
-# Source0-md5:	efc3dff4adb57164e83afb68908018eb
-Patch0:		0001-Use-system-rapidjson.patch
-Patch1:		0002-CMake-fixes.patch
+# Source0-md5:	7b13298f151ad5bd2d4a74c0c66bfa41
+Source1:	https://github.com/Tencent/rapidjson/archive/%{rjcommit}/rapidjson-%{rjcommit}.tar.gz
+# Source1-md5:	531f76775e11b09b28422bfa1d4d59b5
+Patch0:		0002-CMake-fixes.patch
 URL:		http://opentimeline.io/
 BuildRequires:	Imath-devel
 BuildRequires:	cmake >= 3.16
@@ -42,9 +44,12 @@ Header files for %{name} development.
 Pliki nagłówkowe dla programistów używających %{name}.
 
 %prep
-%setup -q
+%setup -q -a1
 %patch -P0 -p1
-%patch -P1 -p1
+# Imath: system version used via OTIO_FIND_MATH
+# rapidjson: snapshot needed for APIs added since last release
+find src/deps/{Imath,rapidjson} -delete
+mv rapidjson-%{rjcommit} src/deps/rapidjson
 
 %build
 %cmake -B build \
@@ -73,10 +78,10 @@ rm -rf $RPM_BUILD_ROOT
 %files
 %defattr(644,root,root,755)
 %doc *.md *.pdf *.txt
-%ghost %{_libdir}/libopentime.so.0
-%attr(755,root,root) %{_libdir}/libopentime.so.*.*
-%ghost %{_libdir}/libopentimelineio.so.0
-%attr(755,root,root) %{_libdir}/libopentimelineio.so.*.*
+%ghost %{_libdir}/libopentime.so.18
+%{_libdir}/libopentime.so.*.*
+%ghost %{_libdir}/libopentimelineio.so.18
+%{_libdir}/libopentimelineio.so.*.*
 
 %files devel
 %defattr(644,root,root,755)
