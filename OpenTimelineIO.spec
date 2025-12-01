@@ -1,8 +1,10 @@
 #
 # Conditional build:
 %bcond_with	tests		# build with tests
+
 %define		rjcommit	24b5e7a8b27f42fa16b96fc70aade9106cf7102f
-Summary:	OpenTimelineIO
+Summary:	Interchange format and API for editorial cut information
+Summary(pl.UTF-8):	Format wymiany i API do finformacji o cięciach edytorskich
 Name:		OpenTimelineIO
 Version:	0.18.1
 Release:	1
@@ -30,6 +32,12 @@ OpenTimelineIO is an interchange format and API for editorial cut
 information. OTIO contains information about the order and length of
 cuts and references to external media. It is not however, a container
 format for media.
+
+%description -l pl.UTF-8
+OpenTimelineIO to format wymiany i API do informacji o cięciach
+edytorskich. OTIO zawiera informacje o kolejności i długości cięć oraz
+odwołania do zewnętrznych multimediów. Nie jest to jednak format
+kontenera dla multimediów.
 
 %package devel
 Summary:	Header files for %{name} development
