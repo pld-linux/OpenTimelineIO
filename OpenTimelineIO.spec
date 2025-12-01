@@ -1,6 +1,9 @@
+# TODO: 
+# - system rapidjson when possible
+# - python bindings?
 #
 # Conditional build:
-%bcond_with	tests		# build with tests
+%bcond_with	tests		# test suite
 
 %define		rjcommit	24b5e7a8b27f42fa16b96fc70aade9106cf7102f
 Summary:	Interchange format and API for editorial cut information
@@ -16,16 +19,15 @@ Source1:	https://github.com/Tencent/rapidjson/archive/%{rjcommit}/rapidjson-%{rj
 # Source1-md5:	531f76775e11b09b28422bfa1d4d59b5
 Patch0:		0002-CMake-fixes.patch
 URL:		http://opentimeline.io/
-BuildRequires:	Imath-devel
-BuildRequires:	cmake >= 3.16
+BuildRequires:	Imath-devel >= 3
+BuildRequires:	cmake >= 3.18.2
+BuildRequires:	libstdc++-devel >= 6:7
 BuildRequires:	ninja
 BuildRequires:	rapidjson-devel >= 1.1.1
-BuildRequires:	rpmbuild(macros) >= 1.164
+BuildRequires:	rpmbuild(macros) >= 1.736
 BuildRequires:	tar >= 1:1.22
 BuildRequires:	xz
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
-
-%define		qt6dir		%{_libdir}/qt6
 
 %description
 OpenTimelineIO is an interchange format and API for editorial cut
@@ -44,6 +46,7 @@ Summary:	Header files for %{name} development
 Summary(pl.UTF-8):	Pliki nagłówkowe dla programistów używających %{name}
 Group:		X11/Development/Libraries
 Requires:	%{name} = %{version}-%{release}
+Requires:	Imath-devel >= 3
 
 %description devel
 Header files for %{name} development.
@@ -57,13 +60,14 @@ Pliki nagłówkowe dla programistów używających %{name}.
 # Imath: system version used via OTIO_FIND_MATH
 # rapidjson: snapshot needed for APIs added since last release
 find src/deps/{Imath,rapidjson} -delete
-mv rapidjson-%{rjcommit} src/deps/rapidjson
+%{__mv} rapidjson-%{rjcommit} src/deps/rapidjson
 
 %build
 %cmake -B build \
 	-G Ninja \
 	%{!?with_tests:-DBUILD_TESTING=OFF} \
 	-DKDE_INSTALL_USE_QT_SYS_PATHS=ON \
+	-DOTIO_AUTOMATIC_SUBMODULES=OFF \
 	-DOTIO_FIND_IMATH=ON
 
 %ninja_build -C build
@@ -72,9 +76,9 @@ mv rapidjson-%{rjcommit} src/deps/rapidjson
 %ninja_build -C build test
 %endif
 
-
 %install
 rm -rf $RPM_BUILD_ROOT
+
 %ninja_install -C build
 
 %clean
