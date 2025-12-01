@@ -80,12 +80,12 @@ rm -rf $RPM_BUILD_ROOT
 %clean
 rm -rf $RPM_BUILD_ROOT
 
-%post -p /sbin/ldconfig
-%postun -p /sbin/ldconfig
+%post	-p /sbin/ldconfig
+%postun	-p /sbin/ldconfig
 
 %files
 %defattr(644,root,root,755)
-%doc *.md *.pdf *.txt
+%doc ADOPTERS.md CONTRIBUTORS.md NOTICE.txt README.md README_contrib.md
 %ghost %{_libdir}/libopentime.so.18
 %{_libdir}/libopentime.so.*.*
 %ghost %{_libdir}/libopentimelineio.so.18
