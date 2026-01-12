@@ -10,7 +10,7 @@ Summary:	Interchange format and API for editorial cut information
 Summary(pl.UTF-8):	Format wymiany i API do finformacji o cięciach edytorskich
 Name:		OpenTimelineIO
 Version:	0.18.1
-Release:	1
+Release:	2
 License:	Apache v2.0
 Group:		X11/Libraries
 Source0:	https://github.com/AcademySoftwareFoundation/OpenTimelineIO/archive/v%{version}/%{name}-%{version}.tar.gz
